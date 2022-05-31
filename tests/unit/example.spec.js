@@ -1,3 +1,0 @@
-describe("Example", () => {
-	test("example", () => {});
-});
