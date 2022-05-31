@@ -1,23 +1,32 @@
 import { shallowMount, mount } from "@vue/test-utils";
 import Indecision from "@/components/Indecision";
 
+var promiseObj = { answer: "yes", force: "false", image: "https://yesno.wtf/assets/yes/2.gif" };
+
 describe("Indecision Component", () => {
-	let wrapper, varSpy;
+	var wrapper, varSpy;
+
+	global.fetch = jest.fn(() =>
+		Promise.resolve({
+			json: () => Promise.resolve(promiseObj),
+		})
+	);
 
 	beforeEach(() => {
 		wrapper = shallowMount(Indecision);
 		varSpy = jest.spyOn(console, "log");
+		jest.clearAllMocks();
 	});
 
 	test("should match with the snapshot", () => {
-		const wrapper = shallowMount(Indecision);
+		let wrapper = shallowMount(Indecision);
 
 		expect(wrapper.html()).toMatchSnapshot();
 	});
 
 	test("shouldn't trigger anything meanwhile the input is being filled", async () => {
-		const getAnswer = jest.spyOn(wrapper.vm, "getAnswer");
-		const input = wrapper.find("input");
+		let getAnswer = jest.spyOn(wrapper.vm, "getAnswer");
+		let input = wrapper.find("input");
 
 		await input.setValue("My question");
 
@@ -25,9 +34,21 @@ describe("Indecision Component", () => {
 		expect(getAnswer).not.toHaveBeenCalled();
 	});
 
-	test("should trigger the api call when the symbol '?' is detected", () => {});
+	test("should trigger getAnswer when the symbol '?' is detected", async () => {
+		let getAnswer = jest.spyOn(wrapper.vm, "getAnswer");
+		let input = wrapper.find("input");
 
-	test("getAnswer - success", () => {});
+		await input.setValue("My question?");
+
+		expect(getAnswer).toHaveBeenCalledTimes(1);
+	});
+
+	test("getAnswer - success", async () => {
+		await wrapper.vm.getAnswer();
+
+		expect(wrapper.vm.img).toBe(promiseObj.image);
+		expect(wrapper.vm.answer).toBe(promiseObj.answer);
+	});
 
 	test("getAnswer - fail", () => {});
 });
