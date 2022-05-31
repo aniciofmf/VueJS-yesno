@@ -26,6 +26,8 @@ export default {
 		question(value, oldValue) {
 			this.isValidQuestion = false;
 
+			console.log({ value });
+
 			if (value.length == 0) {
 				this.answer = null;
 				this.img = null;
