@@ -8,7 +8,7 @@ describe("Counter Component", () => {
 		cb.trigger("click");
 	};
 
-	beforeAll(() => {
+	beforeEach(() => {
 		wrapper = shallowMount(Counter);
 	});
 

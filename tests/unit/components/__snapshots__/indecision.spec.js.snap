@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Indecision Component should match with the snapshot 1`] = `
+<!--v-if-->
+<div class="bg-dark"></div>
+<div class="indecision-container"><input type="text" placeholder="Ask me something">
+  <p>Remember to end the question with a <strong>?</strong></p>
+  <!--v-if-->
+</div>
+`;
