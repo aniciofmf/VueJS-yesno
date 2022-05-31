@@ -44,4 +44,22 @@ describe("Counter Component", () => {
 		await btnTriggerAction(btnDecr);
 		expect(pEl.text()).toBe("5");
 	});
+
+	test("should compare the default prop value", () => {
+		const { start } = wrapper.props();
+		const pEl = wrapper.find('[data-testid="counter"]');
+
+		expect(Number(pEl.text())).toBe(start);
+	});
+
+	test("should set and compare the title prop's value", () => {
+		const titleMsg = "My Title";
+		const wrapper = shallowMount(Counter, {
+			props: {
+				title: titleMsg,
+			},
+		});
+
+		expect(wrapper.find("h2").text()).toBe(titleMsg);
+	});
 });
