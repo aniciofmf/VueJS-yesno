@@ -45,10 +45,16 @@ export default {
 	},
 	methods: {
 		async getAnswer() {
-			const { answer, image } = await fetch("https://yesno.wtf/api").then((r) => r.json());
+			try {
+				const { answer, image } = await fetch("https://yesno.wtf/api").then((r) => r.json());
 
-			this.answer = answer;
-			this.img = image;
+				this.answer = answer;
+				this.img = image;
+			} catch (error) {
+				this.error = "API Fail";
+				this.answer = null;
+				this.img = null;
+			}
 		},
 	},
 };

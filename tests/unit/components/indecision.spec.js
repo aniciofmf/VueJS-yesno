@@ -50,5 +50,14 @@ describe("Indecision Component", () => {
 		expect(wrapper.vm.answer).toBe(promiseObj.answer);
 	});
 
-	test("getAnswer - fail", () => {});
+	test("getAnswer - fail", async () => {
+		let img = wrapper.find("img");
+
+		fetch.mockImplementationOnce(() => Promise.reject("API Fail"));
+
+		await wrapper.vm.getAnswer();
+
+		expect(img.exists()).toBeFalsy();
+		expect(wrapper.vm.error).toBe("API Fail");
+	});
 });
