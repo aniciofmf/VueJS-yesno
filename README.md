@@ -1,1 +1,1 @@
-# Simple VueJS App
+# VueJS Random Answer (YES/NO) App
